@@ -9,19 +9,19 @@ const Home = () => {
             {
                 title: "First Item",
                 body: "This is the body of the first item.",
-                author: "Author One",
+                author: "One",
                 id: 1,
               },
               {
                 title: "Second Item",
                 body: "This is the body of the second item.",
-                author: "Author Two",
+                author: "Two",
                 id: 2,
               },
               {
                 title: "Third Item",
                 body: "This is the body of the third item.",
-                author: "Author Three",
+                author: "Three",
                 id: 3,
               }
         ]
@@ -30,6 +30,7 @@ const Home = () => {
     return ( 
         <div className="home">
          <BlogList blogs={blogs} title="All Blogs"/>
+         <BlogList blogs={blogs.filter((blog)=> blog.author==="Three")} title={'Author Three Blog'}/>
           
         </div>
      );
