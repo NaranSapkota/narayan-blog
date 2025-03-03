@@ -2,30 +2,7 @@ import {useState,useEffect} from 'react';
 import BlogList from './BlogList';
 
 const Home = () => {
-    const[blogs,setBlog]=useState(
-        [
-
-
-            {
-                title: "First Item",
-                body: "This is the body of the first item.",
-                author: "One",
-                id: 1,
-              },
-              {
-                title: "Second Item",
-                body: "This is the body of the second item.",
-                author: "Two",
-                id: 2,
-              },
-              {
-                title: "Third Item",
-                body: "This is the body of the third item.",
-                author: "Three",
-                id: 3,
-              }
-        ]
-    );
+    const[blogs,setBlog]=useState(null);
 
 
  const [name, setName]=useState('mario');
@@ -34,15 +11,24 @@ const Home = () => {
       setBlog(newBlogs);
     }
 
+
 useEffect(()=>{
-  console.log('use effect ran');
-  console.log(name);
-},[name]);
+
+  fetch('http://localhost:8000/blogs')
+  .then(res=>{
+    return res.json();
+  }).then(data=>setBlog(data));
+
+  // console.log('use effect ran');
+  // console.log(name);
+},[]);
+
+
     return ( 
         <div className="home">
-         <BlogList blogs={blogs} title="All Blogs" handleDelete={handleDelete} />
+        {blogs && <BlogList blogs={blogs} title="All Blogs" handleDelete={handleDelete} /> }
          <button onClick={()=> setName('luigi')}>change name</button>
-         <p>{name}</p>
+         {/* {/* <p>{name}</p> */}
       
          {/* <BlogList blogs={blogs.filter((blog)=> blog.author==="Three")} title={'Author Three Blog'}/> */}
           
