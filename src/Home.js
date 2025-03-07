@@ -3,6 +3,7 @@ import BlogList from './BlogList';
 
 const Home = () => {
     const[blogs,setBlog]=useState(null);
+    const [isPending,setIsPending]=useState(true);
 
 
  const [name, setName]=useState('mario');
@@ -14,18 +15,24 @@ const Home = () => {
 
 useEffect(()=>{
 
-  fetch('http://localhost:8000/blogs')
-  .then(res=>{
-    return res.json();
-  }).then(data=>setBlog(data));
+  setTimeout(()=>{
 
-  // console.log('use effect ran');
-  // console.log(name);
+    fetch('http://localhost:8000/blogs')
+    .then(res=>{
+      return res.json();
+    }).then(data=>{
+      setBlog(data)
+      setIsPending(false);
+    });
+  },1000);
+
+
 },[]);
 
 
     return ( 
         <div className="home">
+          {isPending && <div>Loading...</div> }
         {blogs && <BlogList blogs={blogs} title="All Blogs" handleDelete={handleDelete} /> }
          <button onClick={()=> setName('luigi')}>change name</button>
          {/* {/* <p>{name}</p> */}
